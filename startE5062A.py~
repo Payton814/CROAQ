@@ -1,0 +1,50 @@
+from pymeasure.instruments.agilent import AgilentE5062A
+import numpy as np
+
+def startE5062A(IP, IFBandwidth, nAVG):
+    ## Establish a connection with the network analyzer
+    ## Connection being established is through an ethernet cable between the Raspberry Pi and the VNA
+    ## Since a LAN port is being used, the com type is TCPIP
+
+    ## IP 192.168.2.233 was set manually on the VNA
+    ## Netmask 255.255.255.0
+    ## Gateway was left blank
+    vna = AgilentE5062A("TCPIP::192.168.2.233::inst0::INSTR")
+
+
+    ## Use Channel 1
+    ch = vna.channels[1]
+
+    ch.visible_traces = 4
+
+    for i, (tr, parameter) in enumerate(zip(ch.traces.values(), ['S11', 'S12', 'S21', 'S22'])):
+        tr.parameter = parameter
+
+    ch.averages = 20
+    ch.averaging_enables = True
+    ch.trigger_continuous = False
+    vna.trigger_source = 'BUS'
+    vna.abort()
+    ch.restart_averaging()
+    ch.IF_bandwidth = 10000
+    ch.display_layout = 'D1'
+
+    ch.start_frequency = 1e9
+    ch.stop_frequency = 3e9
+
+    for _ in range(ch.averages):
+        ch.trigger_initiate()
+        vna.trigger_single()
+        vna.wait_for_complete()
+    #ch.display_layout(D1)
+
+    freqs = ch.frequencies
+    s_matrix = np.empty((freqs.size,4))
+    for i, tr in enumerate(ch.traces.values()):
+        tr.activate()
+        ch.trace_format = 'MLOG'
+        re, im = ch.data
+        s_matrix[:,i] = re
+    s_matrix = s_matrix.reshape(-1, 2, 2)
+
+    return s_matrix[:, 1, 0]
