@@ -17,13 +17,16 @@ import sys
 ## Q for a lossy material at full insertion was ~2000.
 ## 3GHz/2000 = 1.5 MHz. Therefore, 5 MHz should be enough to capture all realistic cases.
 
-CURRENT_POS = sys.argv[1]
+CURRENT_POS = float(sys.argv[1])
 IP = "192.168.2.233" ## IP address for the network analyzer in Beatty lab
 IFBandwidth = 1e4 ## In Hz
+
 DEFAULT_SHIFT = 1e6
+SHIFT = DEFAULT_SHIFT
+
 WINDOW_WIDTH = 5e6 ## Window the VNA is taking measurements
-fstart = 1e9 + WINDOW_WIDTH/2 ## in Hz
-fend = 1e9 - WINDOW_WIDTH/2 ## in Hz
+fstart = 1e9 + WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
+fend = 1e9 - WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
 nAVG = 1 ## Number of times the measurement is performed and averaged
 
 print("Measurement Window: ", fstart, fend)
