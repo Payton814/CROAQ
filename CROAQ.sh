@@ -11,6 +11,7 @@ python CROAQ.py $CURRENT_POS ## Take sample measurement. This is the empty cavit
 while [ $CURRENT_POS -lt $NSTEPS ]
 do
     ticcmd --exit-safe-start --position-relative $STEP_SIZE ## Move the actuator by the STEP_SIZE
+    sleep 5 ## Wait before executing next command to be sure the actuator has stopped moving
     python CROAQ.py $CURRENT_POS
     CURRENT_POS=$((CURRENT_POS+1))
 done
