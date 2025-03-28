@@ -1,0 +1,16 @@
+#!/bin/bash
+
+g=0
+h=2
+f=3
+echo $g
+
+while [ $g -lt 10 ]
+do
+    echo $g
+    g=$((g+1))
+done
+
+echo ""
+hf=$((h*f))
+echo $hf

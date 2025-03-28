@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from getS21_E5062A import getS21_E5062A
+import pandas as pd
 import sys
 
 ## The E5062A is limited to 1601 sample points in a given bandwidth.
@@ -19,17 +20,32 @@ import sys
 
 CURRENT_POS = float(sys.argv[1])
 IP = "192.168.2.233" ## IP address for the network analyzer in Beatty lab
-IFBandwidth = 1e4 ## In Hz
+IFBandwidth = 100 ## In Hz
 
 DEFAULT_SHIFT = 1e6
 SHIFT = DEFAULT_SHIFT
 
 WINDOW_WIDTH = 5e6 ## Window the VNA is taking measurements
-fstart = 1e9 + WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
-fend = 1e9 - WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
+fstart = 1e9 - WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
+fend = 1e9 + WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
 nAVG = 1 ## Number of times the measurement is performed and averaged
 
 print("Measurement Window: ", fstart, fend)
 
-S21 = getS21_E5062A(IP, IFBandwidth, fstart, fend, nAVG)
+f, S21 = getS21_E5062A(IP, IFBandwidth, fstart, fend, nAVG)
+Data = {'Frequency (Hz)': f,
+        'S21': S21}
+
+df = pd.DataFrame(Data)
+df.to_csv('./data/' + sys.argv[1] + '.csv', index=False, header=False)
+
+fres = f[S21.argmax()]
+print('Resonant Frequency', fres/1e9, "GHz")
+Data2 = {'Step': None,
+         'height (mm)': None,
+         'Frequency (GHz)': [fres/1e9]}
+df2 = pd.DataFrame(Data2)
+df2.to_csv('./data/trial1.csv', mode = 'a', index = False, header = False)
+
+
 print("loss", S21[int(len(S21)/2)])

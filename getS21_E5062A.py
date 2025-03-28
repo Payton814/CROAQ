@@ -45,4 +45,4 @@ def getS21_E5062A(IP, IFBandwidth, fstart, fend, nAVG):
         re, im = ch.data
         s21 = re
 
-    return s21
+    return freqs, s21
