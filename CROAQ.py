@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 from getS21_E5062A import getS21_E5062A
+from getQraw import getQraw
+from getQspline import getQspline
 import pandas as pd
+import numpy as np
 import sys
 
 ## The E5062A is limited to 1601 sample points in a given bandwidth.
@@ -33,6 +36,9 @@ nAVG = 1 ## Number of times the measurement is performed and averaged
 print("Measurement Window: ", fstart, fend)
 
 f, S21 = getS21_E5062A(IP, IFBandwidth, fstart, fend, nAVG)
+Qraw = getQraw(f, S21)
+Qspline = getQspline(f, 10**(S21/10))
+
 Data = {'Frequency (Hz)': f,
         'S21': S21}
 
@@ -43,9 +49,12 @@ fres = f[S21.argmax()]
 print('Resonant Frequency', fres/1e9, "GHz")
 Data2 = {'Step': None,
          'height (mm)': None,
-         'Frequency (GHz)': [fres/1e9]}
+         'Frequency (GHz)': [fres/1e9],
+         'Q raw': [Qraw],
+         'Q spline': [Qspline]}
 df2 = pd.DataFrame(Data2)
 df2.to_csv('./data/trial1.csv', mode = 'a', index = False, header = False)
 
-
-print("loss", S21[int(len(S21)/2)])
+print('Resonant Frequency', fres)
+print('Q', Qraw, Qspline)
+print("loss", S21.max())
