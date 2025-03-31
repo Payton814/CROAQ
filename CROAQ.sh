@@ -1,6 +1,6 @@
 #! /bin/bash
 
-xdg-open ../../Downloads/Frog_Smoke.jpg
+xdg-open ./logo/Croaqcomt1.png
 sleep 5
 pkill eog
 
