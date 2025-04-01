@@ -14,7 +14,7 @@
 import numpy as np
 from scipy.interpolate import UnivariateSpline
 
-def getQraw(f, S21):
+def getQspline(f, S21):
     fres = f[S21.argmax()] ## The resonant frequency occurs at the maximum in the data, assuming 1 peak
 
     ## Q is defined as fres/fwhm. Need to get the -3dB point to the right and to the left of fres
