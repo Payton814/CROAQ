@@ -1,0 +1,26 @@
+#! /bin/bash
+
+xdg-open ./logo/Croaqcomt1.png
+sleep 5
+pkill eog
+
+DATA_DIR=$1
+
+rm -r ./data/$DATA_DIR; mkdir ./data/$DATA_DIR
+cp -f ./template/dtmp.csv ./data/$DATA_DIR/trial1.csv
+
+echo "Measurement in Progress..."
+CURRENT_POS=0 ## Initialize actuator position to 0
+NSTEPS=400
+
+##python CROAQ.py $CURRENT_POS $DATA_DIR ## Take sample measurement. This is the empty cavity measurement
+
+
+while [ $CURRENT_POS -lt $NSTEPS ]
+do
+    python CROAQ.py $CURRENT_POS $DATA_DIR
+    CURRENT_POS=$((CURRENT_POS+1))
+    echo $CURRENT_POS
+done
+
+echo "Measurement Complete"

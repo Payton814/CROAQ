@@ -6,6 +6,7 @@ import sys
 
 try:
     FILE = sys.argv[1]
+    print(FILE)
 except:
     print("FUCK")
 

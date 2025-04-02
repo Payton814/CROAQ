@@ -1,4 +1,10 @@
 Step,height (mm),Frequency (GHz),Q raw,Q spline,Loss (dB),,mm_p_step,Holder Material,Sample,OD base (mm),OD top (mm),Length (mm),Length wo base (mm),ID (mm),WG_length (mm),WG_d (mm),WG_wall_thickness (mm),Mode,Aeff
 ,,0.997503125
-,,0.99980625
-,,0.99983125
+,,0.999175
+,,0.996875
+,,2.495486875
+,,2.495480625
+,,2.495480625
+,,2.4954775
+,,2.495474375
+,,2.495474375

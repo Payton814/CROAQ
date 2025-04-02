@@ -21,7 +21,7 @@ def getQraw(f, S21):
     ## So we take the logmag of S21, offset but value of fres (puts peak at 0)
     ## then offset by 3 (puts -3dB point at 0)
     ## Finally take abs of data. This ensures all values are positive and the points closest to 0 are the -3dB
-    S21alt = abs(10*np.log10(S21) + abs(10*np.log10(S21[S21.argmax()])) + 3)
+    S21alt = abs(S21 + abs(S21[S21.argmax()]) + 3)
 
     ## Q is defined as fres/fwhm. Need to get the -3dB point to the right and to the left of fres
     Qfr = f[S21.argmax() + S21alt[S21.argmax():].argmin()]
