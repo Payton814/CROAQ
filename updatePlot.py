@@ -16,7 +16,7 @@ def animate(i, FILE = FILE):
     x = range(len(y))
     plt.cla()
     plt.plot(x, y, marker = 'o')
-    plt.ylim(0.9*y.min(), 1.1*y.max())
+    plt.ylim(0.999*y.min(), 1.001*y.max())
 
 ani = FuncAnimation(plt.gcf(), animate, interval=5000, cache_frame_data=False)
 plt.show()
