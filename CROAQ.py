@@ -25,12 +25,12 @@ CURRENT_POS = float(sys.argv[1])
 IP = "192.168.2.233" ## IP address for the network analyzer in Beatty lab
 IFBandwidth = 100 ## In Hz
 
-DEFAULT_SHIFT = 0.25e5
+DEFAULT_SHIFT = 1e4
 SHIFT = DEFAULT_SHIFT
 
 WINDOW_WIDTH = 5.0e6 ## Window the VNA is taking measurements
-fstart = 2.7995625e9 - WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
-fend = 2.7995625e9 + WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
+fstart = 1.3933438e9 - WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
+fend = 1.3933438e9 + WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
 nAVG = 1 ## Number of times the measurement is performed and averaged
 
 print("Measurement Window: ", fstart, fend)
