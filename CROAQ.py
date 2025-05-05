@@ -29,15 +29,15 @@ DEFAULT_SHIFT = 1e4
 SHIFT = DEFAULT_SHIFT
 
 WINDOW_WIDTH = 5.0e6 ## Window the VNA is taking measurements
-fstart = 1.3933438e9 - WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
-fend = 1.3933438e9 + WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
+fstart = 1.0357369e9 - WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
+fend = 1.0357369e9 + WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
 nAVG = 1 ## Number of times the measurement is performed and averaged
 
 print("Measurement Window: ", fstart, fend)
 
 f, S21 = getS21_E5062A(IP, IFBandwidth, fstart, fend, nAVG)
-#Qraw = getQraw(f, S21)
-#Qspline = getQspline(f, 10**(S21/10))
+Qraw = getQraw(f, S21)
+Qspline = getQspline(f, 10**(S21/10))
 
 Data = {'Frequency (Hz)': f,
         'S21': S21}
@@ -49,10 +49,12 @@ fres = f[S21.argmax()]
 print('Resonant Frequency', fres/1e9, "GHz")
 Data2 = {'Step': None,
          'height (mm)': None,
-         'Frequency (GHz)': [fres/1e9]}
+         'Frequency (GHz)': [fres/1e9],
+         'Q raw': [Qraw],
+         'Q spline': [Qspline]}
 df2 = pd.DataFrame(Data2)
 df2.to_csv('./data/' + sys.argv[2] + '/trial1.csv', mode = 'a', index = False, header = False)
 
 print('Resonant Frequency', fres)
-#print('Q', Qraw, Qspline)
+print('Q', Qraw, Qspline)
 print("loss", S21.max())
