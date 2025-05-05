@@ -43,7 +43,7 @@ Data = {'Frequency (Hz)': f,
         'S21': S21}
 
 df = pd.DataFrame(Data)
-df.to_csv('./data/' + sys.argv[1] + '.csv', index=False, header=False)
+df.to_csv('./data/' + sys.argv[2] + '/' + sys.argv[1] + '.csv', index=False, header=False)
 
 fres = f[S21.argmax()]
 print('Resonant Frequency', fres/1e9, "GHz")
