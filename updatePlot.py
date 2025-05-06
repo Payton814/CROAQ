@@ -22,7 +22,7 @@ def animate(i, FILE = FILE):
     ax2.plot(x, Qraw, marker = 'o', color = 'cornflowerblue', label = 'Q raw')
     ax2.plot(x, Qspline, marker = 'D', color = 'darkcyan', label = 'Q spline')
     ax1.set_ylim(0.999*y.min(), 1.001*y.max())
-    ax2.set_ylim(0.8*Qraw.min(), 6000)
+    ax2.set_ylim(0.99*Qraw.min(), 1.01*Qraw.max())
 
 fig, ax1 = plt.subplots()
 
