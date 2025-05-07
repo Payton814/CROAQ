@@ -51,4 +51,4 @@ def findPeak(PeakNum):## Establish a connection with the network analyzer
 
     peaks, _ = find_peaks(s_matrix, height=-45)
 
-    return freqs[peaks[PeakNum-1]]
+    return freqs[peaks[PeakNum - 1]]

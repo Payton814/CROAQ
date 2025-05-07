@@ -27,7 +27,7 @@ IP = "192.168.2.233" ## IP address for the network analyzer in Beatty lab
 IFBandwidth = 100 ## In Hz
 
 if (CURRENT_POS == 0):
-    fcent = findPeak(sys.argv[3])
+    fcent = findPeak(int(sys.argv[3]))
 else:
     df = pd.read_csv('./data/' + sys.argv[2] + '/trial1.csv')
     flast = np.array(df['Frequency (GHz)'])[-1]
