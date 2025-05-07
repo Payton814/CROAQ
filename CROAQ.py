@@ -4,6 +4,7 @@ from getQraw import getQraw
 from getQspline import getQspline
 import pandas as pd
 import numpy as np
+from findPeaks import findPeak
 import sys
 
 ## The E5062A is limited to 1601 sample points in a given bandwidth.
@@ -26,7 +27,7 @@ IP = "192.168.2.233" ## IP address for the network analyzer in Beatty lab
 IFBandwidth = 100 ## In Hz
 
 if (CURRENT_POS == 0):
-    fcent = 1.0357e9
+    fcent = findPeak(sys.argv[3])
 else:
     df = pd.read_csv('./data/' + sys.argv[2] + '/trial1.csv')
     flast = np.array(df['Frequency (GHz)'])[-1]
