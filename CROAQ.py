@@ -25,12 +25,20 @@ CURRENT_POS = float(sys.argv[1])
 IP = "192.168.2.233" ## IP address for the network analyzer in Beatty lab
 IFBandwidth = 100 ## In Hz
 
+if (CURRENT_POS == 0):
+    fcent = 1.0357e9
+else:
+    df = pd.read_csv('./data/' + sys.argv[2] + '/trial1.csv')
+    flast = np.array(df['Frequency (GHz)'])[-1]
+    fcent = flast*1e9
+                 
+
 DEFAULT_SHIFT = 5e4
 SHIFT = DEFAULT_SHIFT
 
-WINDOW_WIDTH = 5.0e6 ## Window the VNA is taking measurements
-fstart = 2.4958713e9 - WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
-fend = 2.4958713e9 + WINDOW_WIDTH/2 - CURRENT_POS*SHIFT ## in Hz
+WINDOW_WIDTH = 1.0e6 ## Window the VNA is taking measurements
+fstart = fcent - WINDOW_WIDTH/2 ## in Hz
+fend = fcent + WINDOW_WIDTH/2 ## in Hz
 nAVG = 1 ## Number of times the measurement is performed and averaged
 
 print("Measurement Window: ", fstart, fend)
