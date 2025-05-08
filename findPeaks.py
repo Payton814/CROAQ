@@ -6,7 +6,7 @@ from scipy.signal import find_peaks
 import sys
 
 
-def findPeak(PeakNum):## Establish a connection with the network analyzer
+def findPeak(PeakNum, fl = 1e9, fu = 3e9, height = -45):## Establish a connection with the network analyzer
     ## Connection being established is through an ethernet cable between the Raspberry Pi and the VNA
     ## Since a LAN port is being used, the com type is TCPIP
 
@@ -33,8 +33,8 @@ def findPeak(PeakNum):## Establish a connection with the network analyzer
     ch.IF_bandwidth = 100
     ch.display_layout = 'D1'
 
-    ch.start_frequency = 1e9
-    ch.stop_frequency = 3e9
+    ch.start_frequency = fl
+    ch.stop_frequency = fu
     for _ in range(ch.averages):
         ch.trigger_initiate()
         vna.trigger_single()
@@ -49,6 +49,6 @@ def findPeak(PeakNum):## Establish a connection with the network analyzer
         re, im = ch.data
         s_matrix = re
 
-    peaks, _ = find_peaks(s_matrix, height=-45)
+    peaks, _ = find_peaks(s_matrix, height=height)
 
     return freqs[peaks[PeakNum - 1]]
