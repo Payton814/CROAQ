@@ -19,7 +19,7 @@ def animate(i, FILE = FILE):
     ax1.cla()
     ax2.cla()
     ax1.plot(x, y, marker = 'o', color = 'darkolivegreen', label = 'Resonant Frequency')
-    ax2.plot(x, Qraw, marker = 'o', color = 'cornflowerblue', label = 'Q raw')
+    #ax2.plot(x, Qraw, marker = 'o', color = 'cornflowerblue', label = 'Q raw')
     ax2.plot(x, Qspline, marker = 'D', color = 'darkcyan', label = 'Q spline')
     ax1.set_ylim(0.999*y.min(), 1.001*y.max())
     ax2.set_ylim(0.99*Qraw.min(), 1.01*Qraw.max())
@@ -27,7 +27,8 @@ def animate(i, FILE = FILE):
 fig, ax1 = plt.subplots()
 
 ax2 = ax1.twinx()
-plt.legend()
+ax1.legend()
+ax2.legend()
 #plt.grid()
 
 ani = FuncAnimation(plt.gcf(), animate, interval=5000, cache_frame_data=False)
