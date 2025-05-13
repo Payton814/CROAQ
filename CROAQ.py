@@ -65,6 +65,6 @@ Data2 = {'Step': None,
 df2 = pd.DataFrame(Data2)
 df2.to_csv('./data/' + sys.argv[2] + '/trial1.csv', mode = 'a', index = False, header = False)
 
-print('Resonant Frequency', fres)
+#print('Resonant Frequency', fres)
 print('Q', Qraw, Qspline)
 print("loss", S21.max())
