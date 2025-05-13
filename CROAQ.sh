@@ -21,7 +21,7 @@ python updatePlot.py ./data/$DATA_DIR/trial1.csv &
 
 while [ $CURRENT_POS -lt $NSTEPS ]
 do
-    
+    echo "At position $CURRENT_POS"
     ticcmd --exit-safe-start --position-relative $STEP_SIZE ## Move the actuator by the STEP_SIZE
     CURRENT_POS=$((CURRENT_POS+1))
     sleep 5 ## Wait before executing next command to be sure the actuator has stopped moving
@@ -29,6 +29,7 @@ do
     ##CURRENT_POS=$((CURRENT_POS+1))
 done
 
+echo "Retracting $((CURRENT_POS*250)) steps..."
 ticcmd --exit-safe-start --position-relative -$((CURRENT_POS*250))
 
 echo "Sample Measurement Complete"
