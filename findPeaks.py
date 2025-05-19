@@ -6,7 +6,7 @@ from scipy.signal import find_peaks
 import sys
 
 
-def findPeak(PeakNum, fl = 6e8, fu = 8e8, height = -45):## Establish a connection with the network analyzer
+def findPeak(PeakNum, fl = 6e8, fu = 15e8, height = -50):## Establish a connection with the network analyzer
     ## Connection being established is through an ethernet cable between the Raspberry Pi and the VNA
     ## Since a LAN port is being used, the com type is TCPIP
 

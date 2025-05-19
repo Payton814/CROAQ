@@ -28,7 +28,7 @@ IFBandwidth = 100 ## In Hz
 
 if (CURRENT_POS == 0):
     fcent = findPeak(int(sys.argv[3]))
-    fcent = findPeak(1, fl = fcent - 10e6, fu = fcent + 10e6, height = -45)
+    fcent = findPeak(1, fl = fcent - 20e6, fu = fcent + 20e6, height = -40)
 else:
     df = pd.read_csv('./data/' + sys.argv[2] + '/trial1.csv')
     flast = np.array(df['Frequency (GHz)'])[-1]
@@ -46,8 +46,8 @@ nAVG = 1 ## Number of times the measurement is performed and averaged
 print("Measurement Window: ", fstart, fend)
 
 f, S21 = getS21_E5062A(IP, IFBandwidth, fstart, fend, nAVG)
-Qraw = getQraw(f, S21)
-Qspline = getQspline(f, 10**(S21/10))
+##Qraw = getQraw(f, S21)
+##Qspline = getQspline(f, 10**(S21/10))
 
 Data = {'Frequency (Hz)': f,
         'S21': S21}
@@ -59,12 +59,10 @@ fres = f[S21.argmax()]
 print('Resonant Frequency', fres/1e9, "GHz")
 Data2 = {'Step': None,
          'height (mm)': None,
-         'Frequency (GHz)': [fres/1e9],
-         'Q raw': [Qraw],
-         'Q spline': [Qspline]}
+         'Frequency (GHz)': [fres/1e9]}
 df2 = pd.DataFrame(Data2)
 df2.to_csv('./data/' + sys.argv[2] + '/trial1.csv', mode = 'a', index = False, header = False)
 
 #print('Resonant Frequency', fres)
-print('Q', Qraw, Qspline)
+##print('Q', Qraw, Qspline)
 print("loss", S21.max())
