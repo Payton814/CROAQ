@@ -29,8 +29,8 @@ DEFAULT_SHIFT = 5e6
 SHIFT = DEFAULT_SHIFT
 
 WINDOW_WIDTH = 2.5e6 ## Window the VNA is taking measurements
-fstart = 1.0e9 + CURRENT_POS*SHIFT
-fend = 1e9 + (CURRENT_POS+1)*SHIFT ## in Hz
+fstart = 5.0e8 + CURRENT_POS*SHIFT
+fend = 5.0e8 + (CURRENT_POS+1)*SHIFT ## in Hz
 nAVG = 1 ## Number of times the measurement is performed and averaged
 
 print("Measurement Window: ", fstart, fend)
