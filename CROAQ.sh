@@ -24,7 +24,7 @@ do
     echo "At position $CURRENT_POS"
     ticcmd --exit-safe-start --position-relative $STEP_SIZE ## Move the actuator by the STEP_SIZE
     CURRENT_POS=$((CURRENT_POS+1))
-    sleep 5 ## Wait before executing next command to be sure the actuator has stopped moving
+    sleep 8 ## Wait before executing next command to be sure the actuator has stopped moving
     python CROAQ.py $CURRENT_POS $DATA_DIR $PEAK
     ##CURRENT_POS=$((CURRENT_POS+1))
 done
