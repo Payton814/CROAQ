@@ -28,7 +28,7 @@ IFBandwidth = 100 ## In Hz
 
 if (CURRENT_POS == 0):
     fcent = findPeak(int(sys.argv[3]))
-    fcent = findPeak(1, fl = fcent - 50e6, fu = fcent + 50e6, height = -47)
+    fcent = findPeak(1, fl = fcent - 100e6, fu = fcent + 100e6, height = -50)
 else:
     df = pd.read_csv('./data/' + sys.argv[2] + '/trial1.csv')
     flast = np.array(df['Frequency (GHz)'])[-1]
@@ -40,8 +40,8 @@ SHIFT = DEFAULT_SHIFT
 
 ## WINDOW_WIDTH was originally 1e6
 WINDOW_WIDTH = 10.0e6 ## Window the VNA is taking measurements
-fstart = fcent - WINDOW_WIDTH/2 ## in Hz
-fend = fcent + WINDOW_WIDTH/2 ## in Hz
+fstart = fcent -3* WINDOW_WIDTH/4 ## in Hz
+fend = fcent + WINDOW_WIDTH/4 ## in Hz
 nAVG = 1 ## Number of times the measurement is performed and averaged
 
 print("Measurement Window: ", fstart, fend)
