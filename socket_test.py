@@ -71,10 +71,10 @@ def measure_s21():
         send_scpi(sock, "CALC1:FORM MLOG")
 
         # Trigger sweep
-        send_scpi(sock, "INIT1:IMM")
+        send_scpi(sock, "INIT1:IMM; *WAI")
 
         # Wait until sweep finishes
-        wait_sweep_complete(sock, timeout=30)
+        #wait_sweep_complete(sock, timeout=30)
 
         # Fetch data
         data_str = send_scpi(sock, "CALC1:DATA? FDATA", True)
