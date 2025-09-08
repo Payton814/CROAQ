@@ -8,13 +8,13 @@ import numpy as np
 VNA_IP = "192.168.2.233"  # Replace with your VNA IP
 VNA_PORT = 5025
 
-START_FREQ = 1e9          # Hz
-STOP_FREQ  = 2e9          # Hz
-NUM_POINTS = 1601
-IF_BANDWIDTH = 1e3        # Hz
+START_FREQ = 1e9           # Hz
+STOP_FREQ  = 2e9           # Hz
+NUM_POINTS = 201
+IF_BANDWIDTH = 1e3         # Hz
 
 # -----------------------------
-# SCPI Helper
+# SCPI helper
 # -----------------------------
 def send_scpi(sock, cmd, read=False):
     cmd = cmd.strip() + "\n"
@@ -24,65 +24,45 @@ def send_scpi(sock, cmd, read=False):
     return None
 
 # -----------------------------
-# Check if sweep is complete
-# -----------------------------
-def wait_sweep_complete(sock, timeout=30):
-    """
-    Polls the VNA until the sweep is complete.
-    Uses *OPC? query which returns '1' when operations complete.
-    """
-    start_time = time.time()
-    while True:
-        try:
-            resp = send_scpi(sock, "*OPC?", True)
-            if resp.strip() == '1':
-                return True
-        except socket.timeout:
-            pass
-        if time.time() - start_time > timeout:
-            raise TimeoutError("Sweep did not complete in time")
-        time.sleep(0.1)
-
-# -----------------------------
-# Main Measurement Function
+# Main measurement function
 # -----------------------------
 def measure_s21():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.settimeout(30)  # long timeout for slow sweeps
+    sock.settimeout(60)  # generous timeout for slow sweeps
     sock.connect((VNA_IP, VNA_PORT))
 
     try:
-        print("Connected. Instrument ID:", send_scpi(sock, "*IDN?", True))
+        # Identify instrument
+        idn = send_scpi(sock, "*IDN?", True)
+        print("Connected to:", idn)
 
         # Reset and clear
         send_scpi(sock, "*RST")
         send_scpi(sock, "*CLS")
 
-        # Sweep settings
+        # Set sweep parameters
         send_scpi(sock, f"SENS1:FREQ:STAR {START_FREQ}")
         send_scpi(sock, f"SENS1:FREQ:STOP {STOP_FREQ}")
         send_scpi(sock, f"SENS1:SWE:POIN {NUM_POINTS}")
         send_scpi(sock, f"SENS1:BAND {IF_BANDWIDTH}")
 
-        # Assign S21 directly to trace 1
-        send_scpi(sock, "DISP:WIND1:TRAC1:FEED S21")
+        # **ENA-L specific**: select S21 as active parameter
+        send_scpi(sock, "SENS1:PARAM S21")
 
-        # Set display format to log magnitude
+        # Set display format to log magnitude (dB)
         send_scpi(sock, "CALC1:FORM MLOG")
 
-        # Trigger sweep
+        # Trigger sweep and wait until finished
         send_scpi(sock, "INIT1:IMM; *WAI")
 
-        # Wait until sweep finishes
-        #wait_sweep_complete(sock, timeout=30)
-
-        # Fetch data
+        # Retrieve data
         data_str = send_scpi(sock, "CALC1:DATA? FDATA", True)
         logmag = np.array([float(x) for x in data_str.split(",")])
 
         # Frequency axis
         freqs = np.linspace(START_FREQ, STOP_FREQ, NUM_POINTS)
 
+        # Return list of (frequency, S21_dB) tuples
         return list(zip(freqs, logmag))
 
     finally:
@@ -90,7 +70,7 @@ def measure_s21():
         print("Connection closed.")
 
 # -----------------------------
-# Run Example
+# Run example
 # -----------------------------
 if __name__ == "__main__":
     s21_data = measure_s21()
