@@ -21,7 +21,7 @@ def send_scpi(sock, command, read_response=False):
 
 def measure_s21_logmag():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.settimeout(30)
+    sock.settimeout(10)
 
     try:
         print(f"Connecting to VNA at {IP}:{PORT}...")
@@ -43,13 +43,8 @@ def measure_s21_logmag():
         send_scpi(sock, f"SENS1:BAND {IF_BANDWIDTH}")
 
         # Define and select S21
-        send_scpi(sock, "SENS1:PAR:DEL:ALL")
-        
-        send_scpi(sock, "SENS1:PAR:DEF 'Meas1', S21")
-        send_scpi(sock, "SENS1:PAR:SEL 'Meas1'")
-
-        send_scpi(sock, "DISP:WIND1:TRAC1:FEED 'Meas1'")
-
+        send_scpi(sock, "DISP:WIND1:TRAC1:FEED S21")
+        send_scpi(sock, "INIT1:IMM; *WAI")
         # Set display format to log magnitude (dB)
         send_scpi(sock, "CALC1:FORM MLOG")
         print("IM HERE")
@@ -57,7 +52,7 @@ def measure_s21_logmag():
         send_scpi(sock, "INIT1:IMM; *WAI")
         print("NOW HERE")
         # Ensure ASCII output
-        send_scpi(sock, "FORM:DATA ASC")
+        #send_scpi(sock, "FORM:DATA ASC")
 
         # Get frequency axis from instrument
         f_start = float(send_scpi(sock, "SENS1:FREQ:START?", True))
@@ -91,6 +86,12 @@ def measure_s21_logmag():
 # Run example
 # -----------------------------
 if __name__ == "__main__":
+    #sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #sock.settimeout(10)
+    #sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #sock.settimeout(10)
+    #meas_list = send_scpi(sock, "CALC1:PAR:CAT?", True)
+    #print(meas_list)
     s21_data = measure_s21_logmag()
     if s21_data:
         # Show first 5 points
