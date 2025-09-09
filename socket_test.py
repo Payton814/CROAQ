@@ -28,7 +28,7 @@ def send_scpi(sock, cmd, read=False):
 # -----------------------------
 def measure_s21():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.settimeout(60)  # generous timeout for slow sweeps
+    sock.settimeout(30)  # generous timeout for slow sweeps
     sock.connect((VNA_IP, VNA_PORT))
 
     try:
@@ -47,23 +47,34 @@ def measure_s21():
         send_scpi(sock, f"SENS1:BAND {IF_BANDWIDTH}")
 
         # **ENA-L specific**: select S21 as active parameter
-        send_scpi(sock, "SENS1:PARAM S21")
+        send_scpi(sock, "CALC1:PAR1:DEF S21")
+        send_scpi(sock, "CALC1:PAR1:SEL")
+
+        # SSelect trigger source
+        send_scpi(sock, "TRIG:SOUR BUS")
 
         # Set display format to log magnitude (dB)
         send_scpi(sock, "CALC1:FORM MLOG")
 
+        send_scpi(sock, "*TRG")
+
+        send_scpi(sock, "*WAI")
+
+
+
         # Trigger sweep and wait until finished
-        send_scpi(sock, "INIT1:IMM; *WAI")
+        #send_scpi(sock, "INIT1:IMM; *WAI")
 
         # Retrieve data
-        data_str = send_scpi(sock, "CALC1:DATA? FDATA", True)
-        logmag = np.array([float(x) for x in data_str.split(",")])
+        #data_str = send_scpi(sock, "CALC1:DATA? FDATA", True)
+        #logmag = np.array([float(x) for x in data_str.split(",")])
 
         # Frequency axis
-        freqs = np.linspace(START_FREQ, STOP_FREQ, NUM_POINTS)
+        #freqs = np.linspace(START_FREQ, STOP_FREQ, NUM_POINTS)
 
         # Return list of (frequency, S21_dB) tuples
-        return list(zip(freqs, logmag))
+        #return list(zip(freqs, logmag))
+        return 0
 
     finally:
         sock.close()
@@ -74,5 +85,5 @@ def measure_s21():
 # -----------------------------
 if __name__ == "__main__":
     s21_data = measure_s21()
-    for f, db in s21_data[:5]:
-        print(f"{f/1e9:.3f} GHz : {db:.2f} dB")
+    #for f, db in s21_data[:5]:
+    #    print(f"{f/1e9:.3f} GHz : {db:.2f} dB")
