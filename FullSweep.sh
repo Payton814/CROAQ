@@ -11,7 +11,7 @@ cp -f ./template/dtmp.csv ./data/$DATA_DIR/trial1.csv
 
 echo "Measurement in Progress..."
 CURRENT_POS=0 ## Initialize actuator position to 0
-NSTEPS=400
+NSTEPS=350
 
 ##python CROAQ.py $CURRENT_POS $DATA_DIR ## Take sample measurement. This is the empty cavity measurement
 

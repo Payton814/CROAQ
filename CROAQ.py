@@ -28,19 +28,20 @@ IFBandwidth = 100 ## In Hz
 
 if (CURRENT_POS == 0):
     fcent = findPeak(int(sys.argv[3]))
-    fcent = findPeak(1, fl = fcent - 10e6, fu = fcent + 10e6, height = -30)
+    fcent = findPeak(1, fl = fcent - 100e6, fu = fcent + 100e6, height = -50)
 else:
     df = pd.read_csv('./data/' + sys.argv[2] + '/trial1.csv')
     flast = np.array(df['Frequency (GHz)'])[-1]
     fcent = flast*1e9
                  
 
-DEFAULT_SHIFT = 5e4
+DEFAULT_SHIFT = 5e5
 SHIFT = DEFAULT_SHIFT
 
-WINDOW_WIDTH = 5.0e6 ## Window the VNA is taking measurements
-fstart = fcent - WINDOW_WIDTH/2 ## in Hz
-fend = fcent + WINDOW_WIDTH/2 ## in Hz
+## WINDOW_WIDTH was originally 1e6
+WINDOW_WIDTH = 10.0e6 ## Window the VNA is taking measurements
+fstart = fcent -3* WINDOW_WIDTH/4 ## in Hz
+fend = fcent + WINDOW_WIDTH/4 ## in Hz
 nAVG = 1 ## Number of times the measurement is performed and averaged
 
 print("Measurement Window: ", fstart, fend)
@@ -60,11 +61,11 @@ print('Resonant Frequency', fres/1e9, "GHz")
 Data2 = {'Step': None,
          'height (mm)': None,
          'Frequency (GHz)': [fres/1e9],
-         'Q raw': [Qraw],
-         'Q spline': [Qspline]}
+         'Qspline': [Qspline],
+         'Qraw': [Qraw]}
 df2 = pd.DataFrame(Data2)
 df2.to_csv('./data/' + sys.argv[2] + '/trial1.csv', mode = 'a', index = False, header = False)
 
-print('Resonant Frequency', fres)
+#print('Resonant Frequency', fres)
 print('Q', Qraw, Qspline)
 print("loss", S21.max())
