@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from getS21_E5062A import getS21_E5062A
+from getS21 import getS21
 from getQraw import getQraw
 from getQspline import getQspline
 import pandas as pd
@@ -46,7 +47,7 @@ nAVG = 1 ## Number of times the measurement is performed and averaged
 
 print("Measurement Window: ", fstart, fend)
 
-f, S21 = getS21_E5062A(IP, IFBandwidth, fstart, fend, nAVG)
+f, S21 = getS21(IP, IFBandwidth, fstart, fend, 1601)
 Qraw = getQraw(f, S21)
 Qspline = getQspline(f, 10**(S21/10))
 
