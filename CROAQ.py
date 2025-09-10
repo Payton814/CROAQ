@@ -40,7 +40,7 @@ DEFAULT_SHIFT = 5e5
 SHIFT = DEFAULT_SHIFT
 
 ## WINDOW_WIDTH was originally 1e6
-WINDOW_WIDTH = 10.0e6 ## Window the VNA is taking measurements
+WINDOW_WIDTH = 5.0e6 ## Window the VNA is taking measurements
 fstart = fcent -3* WINDOW_WIDTH/4 ## in Hz
 fend = fcent + WINDOW_WIDTH/4 ## in Hz
 nAVG = 1 ## Number of times the measurement is performed and averaged
