@@ -57,7 +57,10 @@ print("Measurement Window: ", fstart, fend)
 
 f, S21 = getS21(IFBandwidth, fstart, fend, 32001, 'N5230C')
 Qraw = getQraw(f, S21)
-Qspline = getQspline(f, 10**(S21/10))
+try:
+    Qspline = getQspline(f, 10**(S21/10))
+except:
+    Qspline = 0
 
 Data = {'Frequency (Hz)': f,
         'S21': S21}
