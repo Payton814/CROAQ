@@ -24,13 +24,13 @@ import sys
 ## 3GHz/2000 = 1.5 MHz. Therefore, 5 MHz should be enough to capture all realistic cases.
 
 CURRENT_POS = float(sys.argv[1])
-IP = "192.168.2.233" ## IP address for the network analyzer in Beatty lab
-IFBandwidth = 100 ## In Hz
-WINDOW_WIDTH = 3.0e6
+#IP = "192.168.2.233" ## IP address for the network analyzer in Beatty lab
+IFBandwidth = 1000 ## In Hz
+WINDOW_WIDTH = 1.0e7
 if (CURRENT_POS == 0):
     delf = 0
     fcent = findPeak(int(sys.argv[3]))
-    fcent = findPeak(1, fl = fcent - 100e6, fu = fcent + 100e6, height = -50)
+    fcent = findPeak(1, fl = fcent - 100e6, fu = fcent + 100e6, height = -30)
 else:
     df = pd.read_csv('./data/' + sys.argv[2] + '/trial1.csv')
     flast = np.array(df['Frequency (GHz)'])[-1] ## Grab the resonant frequency fro last measurement
@@ -55,7 +55,7 @@ nAVG = 1 ## Number of times the measurement is performed and averaged
 
 print("Measurement Window: ", fstart, fend)
 
-f, S21 = getS21(IP, IFBandwidth, fstart, fend, 1601)
+f, S21 = getS21(IFBandwidth, fstart, fend, 32001, 'N5230C')
 Qraw = getQraw(f, S21)
 Qspline = getQspline(f, 10**(S21/10))
 
