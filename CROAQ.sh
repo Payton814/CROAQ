@@ -12,7 +12,7 @@ cp -f ./template/dtmp.csv ./data/$DATA_DIR/trial1.csv
 
 echo "Sample Measurement in Progress..."
 CURRENT_POS=0 ## Initialize actuator position to 0
-NSTEPS=65 ## Number of times the actuator will move sample
+NSTEPS=70 ## Number of times the actuator will move sample
 STEP_SIZE=250 ## The step size for the actuator to make
                ## The development was done with Actuonix P8-75-165-3-ST (Each 1 step is ~0.0018mm)
 python CROAQ.py $CURRENT_POS $DATA_DIR $PEAK ## Take sample measurement. This is the empty cavity measurement
