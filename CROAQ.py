@@ -70,8 +70,8 @@ df.to_csv('./data/' + sys.argv[2] + '/' + sys.argv[1] + '.csv', index=False, hea
 
 fres = f[S21.argmax()]
 print('Resonant Frequency', fres/1e9, "GHz")
-Data2 = {'Step': None,
-         'height (mm)': None,
+Data2 = {'Step': [CURRENT_POS*250],
+         'height (mm)': [CURRENT_POS*250*0.0018],
          'Frequency (GHz)': [fres/1e9],
          'Qspline': [Qspline],
          'Qraw': [Qraw]}
