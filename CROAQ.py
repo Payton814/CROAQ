@@ -49,8 +49,8 @@ SHIFT = DEFAULT_SHIFT
 ## the window width, increase it by 10%
 if (delf > WINDOW_WIDTH/2):
     WINDOW_WIDTH = 4.0*delf
-fstart = fcent -3* WINDOW_WIDTH/4 ## in Hz
-fend = fcent + WINDOW_WIDTH/4 ## in Hz
+fstart = fcent -WINDOW_WIDTH/2 ## in Hz
+fend = fcent + WINDOW_WIDTH/2 ## in Hz
 nAVG = 1 ## Number of times the measurement is performed and averaged
 
 print("Measurement Window: ", fstart, fend)
