@@ -6,7 +6,7 @@ def getS21(IFBANDWIDTH, fstart, fend, npoints, analyzer = 'OSU'):
     rm = pyvisa.ResourceManager()
     vna = rm.open_resource(rm.list_resources()[1])  # This grabs resources seen by pyvisa and assumes the desired one is the send one
     print(vna.query("*IDN?"))
-    vna.timeout = 60000 ## Timeout of 60sec
+    vna.timeout = 90000 ## Timeout of 60sec
 
     # Reset and configure
     vna.write("*RST")
