@@ -9,8 +9,9 @@ PEAK1=$2
 PEAK2=$3
 PEAK3=$4
 PEAK4=$5
+PEAK5=$6
 
-for PEAK in $PEAK1 $PEAK2 $PEAK3 $PEAK4
+for PEAK in $PEAK1 $PEAK2 $PEAK3 $PEAK4 $PEAK5
 do
 rm -r ./data/$DATA_DIR$PEAK; mkdir ./data/$DATA_DIR$PEAK
 cp -f ./template/dtmp.csv ./data/$DATA_DIR$PEAK/trial1.csv
