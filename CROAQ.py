@@ -25,12 +25,12 @@ import sys
 
 CURRENT_POS = float(sys.argv[1])
 #IP = "192.168.2.233" ## IP address for the network analyzer in Beatty lab
-IFBandwidth = 500 ## In Hz
+IFBandwidth = 1000 ## In Hz
 WINDOW_WIDTH = 5.0e6
 if (CURRENT_POS == 0):
     delf = 0
     fcent = findPeak(int(sys.argv[3]))
-    fcent = findPeak(1, fl = fcent - 50e6, fu = fcent + 50e6, height = -45)
+    fcent = findPeak(1, fl = fcent - 50e6, fu = fcent + 50e6, height = -30)
 else:
     df = pd.read_csv('./data/' + sys.argv[2] + '/trial1.csv')
     flast = np.array(df['Frequency (GHz)'])[-1] ## Grab the resonant frequency fro last measurement
