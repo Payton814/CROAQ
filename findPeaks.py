@@ -7,7 +7,7 @@ import sys
 from getS21 import getS21
 
 
-def findPeak(PeakNum, fl = 2.5e9, fu = 5.3e9, height = -45):## Establish a connection with the network analyzer
+def findPeak(PeakNum, fl = 2.5e9, fu = 5.3e9, height = -35):## Establish a connection with the network analyzer
     ## Connection being established is through an ethernet cable between the Raspberry Pi and the VNA
     ## Since a LAN port is being used, the com type is TCPIP
 
