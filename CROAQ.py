@@ -26,7 +26,7 @@ import sys
 CURRENT_POS = float(sys.argv[1])
 #IP = "192.168.2.233" ## IP address for the network analyzer in Beatty lab
 IFBandwidth = 1000 ## In Hz
-WINDOW_WIDTH = 10.0e6
+WINDOW_WIDTH = 15.0e6
 if (CURRENT_POS == 0):
     delf = 0
     fcent = findPeak(int(sys.argv[3]))
