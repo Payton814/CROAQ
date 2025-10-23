@@ -31,7 +31,7 @@ if (CURRENT_POS == 0):
     delf = 0
     fcent = findPeak(int(sys.argv[3]))
     if (int(sys.argv[3]) > 1):
-        fcent = findPeak(1, fl = fcent - 100e6, fu = fcent + 100e6, height = -30)
+        fcent = findPeak(1, fl = fcent - 100e6, fu = fcent + 100e6, height = -25)
     else:
         fcent = findPeak(1, fl = fcent - 100e6, fu = fcent + 100e6, height = -35)
 else:
