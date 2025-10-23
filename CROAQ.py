@@ -26,11 +26,11 @@ import sys
 CURRENT_POS = float(sys.argv[1])
 #IP = "192.168.2.233" ## IP address for the network analyzer in Beatty lab
 IFBandwidth = 1000 ## In Hz
-WINDOW_WIDTH = 15.0e6
+WINDOW_WIDTH = 30.0e6
 if (CURRENT_POS == 0):
     delf = 0
     fcent = findPeak(int(sys.argv[3]))
-    fcent = findPeak(1, fl = fcent - 100e6, fu = fcent + 100e6, height = -35)
+    fcent = findPeak(1, fl = fcent - 100e6, fu = fcent + 100e6, height = -25)
 else:
     df = pd.read_csv('./data/' + sys.argv[2] + '/trial1.csv')
     flast = np.array(df['Frequency (GHz)'])[-1] ## Grab the resonant frequency fro last measurement
@@ -49,8 +49,8 @@ SHIFT = DEFAULT_SHIFT
 ## the window width, increase it by 10%
 if (delf > WINDOW_WIDTH/2):
     WINDOW_WIDTH = 4.0*delf
-fstart = fcent -WINDOW_WIDTH/2 ## in Hz
-fend = fcent + WINDOW_WIDTH/2 ## in Hz
+fstart = fcent -3*WINDOW_WIDTH/4 ## in Hz
+fend = fcent + WINDOW_WIDTH/4 ## in Hz
 nAVG = 1 ## Number of times the measurement is performed and averaged
 
 print("Measurement Window: ", fstart, fend)
