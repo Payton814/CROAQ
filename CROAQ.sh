@@ -43,6 +43,6 @@ echo "Retracting $((CURRENT_POS*STEP_SIZE)) steps..."
 ticcmd --exit-safe-start --position-relative -$((CURRENT_POS*STEP_SIZE))
 
 echo "Sample Measurement Complete"
-sleep 900 ## Wait 5min for the actuator to fully retract
+sleep 300 ## Wait 5min for the actuator to fully retract
 
 done
